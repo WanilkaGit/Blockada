@@ -88,7 +88,7 @@ class Enemy(Settings):# створюєм клас ворога з спадкув
     def update():# функція руху
         pass
     
-class Camera(object):
+class Camera(object):# клас камери коли ми ходимо камера перемііщається з нами
     def __init__(self, camera_func, width, height):
         self.camera_func = camera_func
         self.state = Rect(0, 0, width, height)
@@ -136,54 +136,53 @@ def restart():# рестарт
 x = 0
 y = 0
 def start_pos():# стартова позиція
-    global items, camera
-    camera = Camera(camera_config, level1_width, level1_height)
-    items = sprite.Group()
-    block_r = []
-    block_l = []
-    plat = []
-    coins = []
-    stairs_lst = []
-    x = 0
+    global items, camera# робимо глобальними змінни
+    camera = Camera(camera_config, level1_width, level1_height)# створюєма наблюдателя
+    items = sprite.Group()#  створюємо тусу
+    block_r = []# список 1:
+    block_l = []# список 2:
+    plat = []# список 3:
+    coins = []# список 4:
+    stairs_lst = []# список 6:
+    # всі списки дивіться в кінотеатрах(коді)
+    x = 0#  координати для обєктів
     y = 0
-    for r in level1:
-        for c in r:
-            if c == "-":
-                p1 = Settings(x,y, 40, 40, 0, platform)
-                plat.append(p1)
+    for r in level1:# фор як раб почав ходити по списками перевіряєм індекси
+        for c in r:#  стучим в двері перевіряєм чи
+            if c == "-":# дім полу
+                p1 = Settings(x,y, 40, 40, 0, platform)# створюєм раба платформа
+                plat.append(p1)# 
                 items.add(p1)
-            if c == "l":
-                p2 = Settings(x,y, 40, 40, 0, nothing)
-                block_l.append(p2)
-                items.add(p2)
-            if c == "r":
-                p3 = Settings(x,y, 40, 40, 0, nothing)
-                block_r.append(p3)
-                items.add(p3)
-            if c == "°":
-                p4 = Settings(x,y, 40, 40, 0, coin_img)
-                coins.append(p4)
-                items.add(p4)
-            if c == "/":
-                p5 = Settings(x, y - 40, 40, 180, 0, stairs)
-                stairs_lst.append(p5)
-                items.add(p5)
-            x += 40
-        y += 40
-        x = 0
+            if c == "l":# дім "далі ходу нема"
+                p2 = Settings(x,y, 40, 40, 0, nothing)#  повітря
+                block_l.append(p2)# вони сидять на двух стулах список
+                items.add(p2)# туса/група
+            if c == "r":#  дім "далі ходу тож нема"
+                p3 = Settings(x,y, 40, 40, 0, nothing)#  повітря
+                block_r.append(p3)#в ходять в спи
+                items.add(p3)# в туси/групи
+            if c == "°":# дім бабла
+                p4 = Settings(x,y, 40, 40, 0, coin_img)#  бабла/грошей
+                coins.append(p4)#в ходять в спи
+                items.add(p4)# в туси/групи
+            if c == "/":# дім рабів пояких мона ходить
+                p5 = Settings(x, y - 40, 40, 180, 0, stairs)# сходів
+                stairs_lst.append(p5)#в ходять в спи
+                items.add(p5)# в туси/групи
+            x += 40#  ікси плюс 40
+        y += 40#  перміщаємось в низ
+        x = 0#  ікси 0
 
 
 def lvl_1():# 1 рівень початок
-    game = True
-    while game:
-        for e in event.get():
-            if e.type == QUIT:
-                game = False
+    game = True# зміна для початку / кінця гри
+    while game:#  вайл живиться зміной гейм поки вона тру
+        for e in event.get():#  перевіряєм події
+            if e.type == QUIT:#  якщо це подія червоний хрестик нажатий
+                game = False# то все живитись циклу нічим гейм стає фалсе
 
-        for i in items:
-            window.blit(i.image, camera.apply(i))
-
-
+        for i in items:#  ходим по групі
+            window.blit(i.image, camera.apply(i))#  показуєм обєкти які в полі зору
 
 
 
@@ -193,12 +192,14 @@ def lvl_1():# 1 рівень початок
 
 
 
-        display.update()
+
+
+        display.update()#  оновлюємо вікно
 
 
 
 def lvl1_end():# кінець
     pass
 
-start_pos()
+start_pos()#  запускаєм дві функції
 lvl_1()
